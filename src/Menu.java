@@ -1,20 +1,13 @@
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-
 public class Menu {
     Scanner r = new Scanner(System.in);
-    /*Pessoa pessoas[] = new Pessoa[100];*/
     Utente pessoaUtente[] = new Utente[100];
     Trabalhador pessoaTrabalhador[] = new Trabalhador[100];
     USF unidadesDeSaude[] = new USF[100];
@@ -27,153 +20,76 @@ public class Menu {
     int numeroUSF = 0;
     int numeroHospitais = 0;
     int numeroPolos = 0;
-    void testeDados(){
-        for (int A = 0; A < 3 ; A++ ){
-            pessoaUtente[A] = new Utente();
-            int nIdentificacao = A+1;
-            String nome = "Rodrigo " + A;
-            int nTelefone = A+1;
-            int nUtente =  A+1;
-            String morada = "Morada " + (A+1);
-            String dataNascimento = "01/01/200" + (A+1);
-            pessoaUtente[A].setUtente(nIdentificacao, nome, nTelefone, nUtente, morada, dataNascimento);
-            numeroUtentes++;
-        }
-        for (int B = 0; B < 3; B++){
-            unidadesDeSaude[B] = new USF();
-            String nome = "USF " + (B+1);
-            String email = "USF" + (B+1) + "@" + nome + ".com";
-            String morada = "Morada " + (B+1);
-            String nTelefone = "Contacto: 25264328" + (B+1);
-            unidadesDeSaude[B].setUSF(nome, email, morada, nTelefone);
-            numeroUSF++;
-        }
-        for (int C = 0; C < 3; C++){
-            unidadesHospitalares[C] = new Hospital();
-            String nome = "Hospital " + (C+1);
-            String email = "Hospital" + (C+1) + "@" + nome + ".com";
-            String morada = "Morada " + (C+1);
-            unidadesHospitalares[C].setHospital(nome, email, morada);
-            numeroHospitais++;
-            polos[C] = new Polo();
-            String nomePolo = "Polo " +(C+1);
-            int nTelefone = 252643274 +(C+1);
-            String moradaPolo = "Morada Polo " + (C+1);
-            String hospital = nome;
-            polos[C].setPolo(nomePolo, nTelefone, moradaPolo, hospital);
-            numeroPolos++;
-        }
-        /*for (int D = 0; D < 3; D++){
-            consultas[D] = new Consulta();
-            int nConsulta = D+1;
-            String dataEhora = "10/10/2024 12:12:12" + (D+1);
-            Date dataEhoraRegisto =  new Date();
-            String edificioSala = "Edificio/Sala" + (D+1);
-            String localConsulta = "Local Consulta" + (D+1);
-            String medico = "Médico" + (D+1);
-            String utente = "Utente" + (D+1);
-            String usf = "USF" + (D+1);
-            String especialidade = "Especialidade" + (D+1);
-            String polo = "Polo" + (D+1);
-            String enfermeiro = "Enfermeiro" + (D+1);
-            consultas[D].setConsulta(nConsulta, dataEhora,dataEhoraRegisto, edificioSala,localConsulta, medico, utente,especialidade,enfermeiro);
-            numeroConsultas++;
-        }*/
-        for (int E = 0; E < 6; E++){
-            Random r = new Random();
-            int a = 1;
-            int b = 3;
-            pessoaTrabalhador[E] = new Trabalhador();
-            int nIdentificacao = E+1;
-            String nome = "Nome " + (E+1);
-            int nTelefone = 911111111 + E;
-            int catProf = r.nextInt(b-a) + a;
-            String cedProf = "1" + E;
-            String especialidade = "Dermatologia";
-            pessoaTrabalhador[E].setTrabalhador(nIdentificacao, nome, nTelefone, catProf, cedProf, especialidade);
-            numeroTrabalhador++;
-        }
-    }
     void mostrarMenu(){
-        String opcao;
-        System.out.println("==== Gestão de consultas médicas ====");
-        System.out.println("1 - Área de utentes");
-        System.out.println("2 - Área de trabalhadores");
-        System.out.println("3 - Área de USFs");
-        System.out.println("4 - Área Hospitalar");
-        System.out.println("5 - Área Consultas");
-        System.out.println("0 - Sair");
-        System.out.println("Escolha a opção desejada: ");
-        opcao = r.nextLine();
-        switch(opcao){
-            case "1":
-                limpar();
-                menuUtentes();
-                break;
-            case "2":
-                limpar();
-                menuTrabalhador();
-                break;
-            case "3":
-                limpar();
-                menuUSF();
-                break;
-            case "4":
-                limpar();
-                menuHospital();
-                break;
-            case "5":
-                limpar();
-                menuConsultas();
-                break;
-            case "0":
-                System.exit(0);
-            default:
-                System.out.println("Insira uma opção válida!");
-                dormir(3000);
-                limpar();
-                mostrarMenu();
-                break;
-        }
+        int opcao;
+        do{
+            System.out.println("==== Gestão de consultas médicas ====");
+            System.out.println("1 - Área de utentes");
+            System.out.println("2 - Área de trabalhadores");
+            System.out.println("3 - Área de USFs");
+            System.out.println("4 - Área Hospitalar");
+            System.out.println("5 - Área Consultas");
+            System.out.println("0 - Sair");
+            System.out.println("Escolha a opção desejada: ");
+            opcao = r.nextInt();
+            switch(opcao) {
+                case 1:
+                    menuUtentes();
+                    break;
+                case 2:
+                    menuTrabalhador();
+                    break;
+                case 3:
+                    menuUSF();
+                    break;
+                case 4:
+                    menuHospital();
+                    break;
+                case 5:
+                    menuConsultas();
+                    break;
+                case 0:
+                    System.exit(0);
+                default:
+                    System.out.println("Insira uma opção válida!");
+                    break;
+            }
+        } while (opcao != 0);
     }
     public void menuUtentes(){
-        String opcao;
-        System.out.println("==== ÁREA UTENTES ====");
-        System.out.println("1 - Adicionar Utente");
-        System.out.println("2 - Mostrar Utentes");
-        System.out.println("3 - Atualizar Utente");
-        System.out.println("4 - Apagar Utente");
-        System.out.println("5 - Voltar ao menu inicial");
-        System.out.println("Escolha a opção desejada: ");
-        opcao = r.nextLine();
-        switch(opcao){
-            case "1":
-                limpar();
-                adicionarUtente();
-                break;
-            case "2":
-                limpar();
-                mostrarUtente();
-                break;
-            case "3":
-                limpar();
-                atualizarUtente();
-                break;
-            case "4":
-                limpar();
-                apagarUtente();
-                break;
-            case "5":
-                limpar();
-                mostrarMenu();
-            default:
-                limpar();
-                System.out.println("Insira uma opção válida!");
-                dormir(3000);
-                limpar();
-                menuUtentes();
-                break;
-        }
+        int opcao;
+        do{
+            System.out.println("==== ÁREA UTENTES ====");
+            System.out.println("1 - Adicionar Utente");
+            System.out.println("2 - Mostrar Utentes");
+            System.out.println("3 - Atualizar Utente");
+            System.out.println("4 - Apagar Utente");
+            System.out.println("0 - Voltar ao menu inicial");
+            System.out.println("Escolha a opção desejada: ");
+            opcao = r.nextInt();
+            switch(opcao){
+                case 1:
+                    adicionarUtente();
+                    break;
+                case 2:
+                    mostrarUtente();
+                    break;
+                case 3:
+                    atualizarUtente();
+                    break;
+                case 4:
+                    apagarUtente();
+                    break;
+                case 5:
+                    mostrarMenu();
+                case 0:
+                    //melhor forma que encontrei para não dar erro antes de voltar
+                    break;
+                default:
+                    System.out.println("Insira uma opção válida!");
+                    break;
+            }
+        } while (opcao != 0);
     }
     public void adicionarUtente(){
         int nIdentificacao;
@@ -183,6 +99,7 @@ public class Menu {
         String morada;
         String dataNascimento;
         System.out.println("==== Adicionar Utente ====");
+        r.nextLine(); //limpar o input buffer
         System.out.println("Introduza o nome do Utente");
         nome = r.nextLine();
         System.out.println("Introduza o número de Identicação");
@@ -199,15 +116,10 @@ public class Menu {
         numeroUtentes++;
         pessoaUtente[numeroUtentes - 1 ] = new Utente();
         pessoaUtente[numeroUtentes - 1].setUtente(nIdentificacao, nome, nTelefone, nUtente, morada, dataNascimento);
-        dormir(3000);
-        limpar();
-        menuUtentes();
     }
     public void mostrarUtente(){
         if (numeroUtentes == 0) {
             System.out.println("Não existem Utentes!");
-            dormir(3000);
-            limpar();
             mostrarMenu();
         }
         System.out.println("==== Utentes ====");
@@ -216,8 +128,6 @@ public class Menu {
              pessoaUtente[i].getUtente();
              System.out.println("========");
          }
-        dormir(3000);
-        limpar();
         menuUtentes();
     }
     public void atualizarUtente(){
@@ -258,10 +168,7 @@ public class Menu {
             System.out.println("Introduza a data de nascimento");
             dataNascimento = r.nextLine();
             pessoaUtente[escolhaAtualizarUtente - 1].setUtente(nIdentificacao, nome, nTelefone, nUtente, morada, dataNascimento);
-            limpar();
             System.out.println("Utente atualizado com sucesso!");
-            dormir(2000);
-            limpar();
             menuUtentes();
         }
     }
@@ -279,7 +186,6 @@ public class Menu {
         if (escolhaApagarUtente == 0 || escolhaApagarUtente > numeroUtentes){
             System.out.println("Escolha um Utente válido!");
             menuUtentes();
-            limpar();
         }else{
             escolhaApagarUtente -= 1;
             for (int i = 0 ; i < numeroUtentes; i++){
@@ -293,47 +199,41 @@ public class Menu {
             pessoaUtente = pessoaUtenteApagar;
             numeroUtentes -= 1;
         }
-        dormir(2000);
         menuUtentes();
-        limpar();
     }
     public void menuTrabalhador(){
-        String opcao;
-        System.out.println("==== ÁREA DE TRABALHADORES ====");
-        System.out.println("1- Adicionar Trabalhador");
-        System.out.println("2- Mostrar Trabalhador");
-        System.out.println("3- Atualizar Trabalhador");
-        System.out.println("4- Apagar Trabalhador");
-        System.out.println("5- Voltar ao menu inicial");
-        System.out.println("Escolha a opção desejada");
-        opcao = r.nextLine();
-        switch (opcao){
-            case "1":
-                limpar();
-                adicionarTrabalhador();
-                break;
-            case "2":
-                limpar();
-                mostrarTrabalhador();
-                break;
-            case "3":
-                limpar();
-                atualizarTrabalhador();
-                break;
-            case "4":
-                limpar();
-                apagarTrabalhador();
-                break;
-            case "5":
-                limpar();
-                mostrarMenu();
-            default:
-                System.out.println("Insira uma opção válida!");
-                dormir(2000);
-                limpar();
-                menuTrabalhador();
-                break;
-        }
+        int opcao;
+        do{
+            System.out.println("==== ÁREA DE TRABALHADORES ====");
+            System.out.println("1- Adicionar Trabalhador");
+            System.out.println("2- Mostrar Trabalhador");
+            System.out.println("3- Atualizar Trabalhador");
+            System.out.println("4- Apagar Trabalhador");
+            System.out.println("0- Voltar ao menu inicial");
+            System.out.println("Escolha a opção desejada");
+            opcao = r.nextInt();
+            switch (opcao){
+                case 0:
+                    break;
+                case 1:
+                    adicionarTrabalhador();
+                    break;
+                case 2:
+                    mostrarTrabalhador();
+                    break;
+                case 3:
+                    atualizarTrabalhador();
+                    break;
+                case 4:
+                    apagarTrabalhador();
+                    break;
+                case 5:
+                    mostrarMenu();
+                default:
+                    System.out.println("Insira uma opção válida!");
+                    break;
+            }
+        }while (opcao != 0);
     }
     public void adicionarTrabalhador(){
         int nIdentificacao;
@@ -374,8 +274,6 @@ public class Menu {
         numeroTrabalhador++;
         pessoaTrabalhador[numeroTrabalhador - 1] = new Trabalhador();
         pessoaTrabalhador[numeroTrabalhador - 1].setTrabalhador(nIdentificacao, nome, nTelefone, catProf, cedProf, especialidade);
-        dormir(1000);
-        limpar();
         menuTrabalhador();
     }
     public void mostrarTrabalhador(){
@@ -392,26 +290,19 @@ public class Menu {
         opcaoTrabalhador = r.nextInt();
         switch (opcaoTrabalhador){
             case 1:
-                limpar();
                 mostrarMedico();
                 break;
             case 2:
-                limpar();
                 mostrarEnfermeiro();
                 break;
             case 3:
-                limpar();
                 mostrarTodosTrabalhadores();
                 break;
             case 4:
-                limpar();
                 menuTrabalhador();
                 break;
             default:
-                limpar();
                 System.out.println("Insira uma opção válida!");
-                dormir(3000);
-                limpar();
                 menuTrabalhador();
                 break;
         }
@@ -426,8 +317,6 @@ public class Menu {
                 System.out.println("Não existem médicos disponíveis!");
             }
         }
-        dormir(3000);
-        limpar();
         menuTrabalhador();
     }
     public void mostrarEnfermeiro(){
@@ -440,8 +329,7 @@ public class Menu {
                 System.out.println("Não existem enfermeiros disponíveis");
             }
         }
-        dormir(3000);
-        limpar();
+
         menuTrabalhador();
     }
     public void mostrarTodosTrabalhadores(){
@@ -450,8 +338,6 @@ public class Menu {
             pessoaTrabalhador[i].getTrabalhador();
             System.out.println("========");
         }
-        dormir(3000);
-        limpar();
         menuTrabalhador();
     }
     public void atualizarTrabalhador() {
@@ -506,10 +392,7 @@ public class Menu {
                 especialidade = r.nextLine();
             }
             pessoaTrabalhador[escolhaAtualizarTrabalhador - 1].setTrabalhador(nIdentificacao, nome, nTelefone, catProf, cedProf, especialidade);
-            limpar();
             System.out.println("Trabalhador atualizado com sucesso!");
-            dormir(3000);
-            limpar();
             menuTrabalhador();
         }
     }
@@ -540,58 +423,49 @@ public class Menu {
             pessoaTrabalhador = pessoaTrabalhadorApagar;
             numeroTrabalhador -= 1;
         }
-        limpar();
         menuTrabalhador();
     }
     public void menuUSF(){
-        String opcao;
-        System.out.println("==== ÁREA USF ====");
-        System.out.println("1 - Adicionar USF");
-        System.out.println("2 - Mostrar USF");
-        System.out.println("3 - Atualizar USF");
-        System.out.println("4 - Apagar USF");
-        System.out.println("5 - Mostrar utentes de uma USF");
-        System.out.println("6 - Mostrar consultas existentes de um USF por data");
-        System.out.println("7 - Voltar ao menu inicial");
-        System.out.println("Escolha a opção desejada: ");
-        opcao = r.nextLine();
-        switch(opcao){
-            case "1":
-                limpar();
-                adicionarUSF();
-                break;
-            case "2":
-                limpar();
-                mostrarUSF();
-                break;
-            case "3":
-                limpar();
-                atualizarUSF();
-                break;
-            case "4":
-                limpar();
-                apagarUSF();
-                break;
-            case "5":
-                limpar();
-                mostrarUtentesUSF();
-                break;
-            case "6":
-                limpar();
-                mostrarUsfTotalConsultasData();
-                break;
-            case "7":
-                limpar();
-                mostrarMenu();
-                break;
-            default:
-                limpar();
-                System.out.println("Insira uma opção válida!");
-                dormir(2000);
-                limpar();
-                menuUSF();
-                break;
-        }
+        int opcao;
+        do{
+            System.out.println("==== ÁREA USF ====");
+            System.out.println("1 - Adicionar USF");
+            System.out.println("2 - Mostrar USF");
+            System.out.println("3 - Atualizar USF");
+            System.out.println("4 - Apagar USF");
+            System.out.println("5 - Mostrar utentes de uma USF");
+            System.out.println("6 - Mostrar consultas existentes de um USF por data");
+            System.out.println("7 - Voltar ao menu inicial");
+            System.out.println("Escolha a opção desejada: ");
+            opcao = r.nextInt();
+            switch(opcao){
+                case 1:
+                    adicionarUSF();
+                    break;
+                case 2:
+                    mostrarUSF();
+                    break;
+                case 3:
+                    atualizarUSF();
+                    break;
+                case 4:
+                    apagarUSF();
+                    break;
+                case 5:
+                    mostrarUtentesUSF();
+                    break;
+                case 6:
+                    mostrarUsfTotalConsultasData();
+                    break;
+                case 7:
+                    mostrarMenu();
+                    break;
+                default:
+                    System.out.println("Insira uma opção válida!");
+                    menuUSF();
+                    break;
+            }
+        }while(opcao != 0);
     }
     public void adicionarUSF() {
         Scanner r = new Scanner(System.in);
@@ -612,8 +486,6 @@ public class Menu {
         unidadesDeSaude[numeroUSF - 1] = new USF();
         unidadesDeSaude[numeroUSF - 1].setUSF(nome, email, morada, nTelefone);
         System.out.println("USF criada com sucesso!");
-        dormir(3000);
-        limpar();
         menuUSF();
     }
     public void mostrarUSF(){
@@ -627,8 +499,6 @@ public class Menu {
             System.out.println("========");
         }
         System.out.println("Aqui acima estão listadas todas as USF disponíveis de momento.");
-        dormir(3000);
-        limpar();
         menuUSF();
     }
     public void mostrarUtentesUSF(){
@@ -675,8 +545,6 @@ public class Menu {
         }
         System.out.println("No usf " + nomeEstabelecimentoEscolhido + " existem " + contadorConsultasUsf + " consultas ");
         menuUSF();
-        dormir(2000);
-        limpar();
     }
     public void atualizarUSF(){
         int escolhaAtualizarUSF;
@@ -709,10 +577,7 @@ public class Menu {
             System.out.println("Introduza o contacto da USF: ");
             nTelefone = r.nextLine();
             unidadesDeSaude[escolhaAtualizarUSF - 1].setUSF(nome, email, morada, nTelefone);
-            limpar();
             System.out.println("USF atualizada com sucesso!");
-            dormir(2000);
-            limpar();
             menuUSF();
         }
     }
@@ -743,7 +608,6 @@ public class Menu {
             numeroUSF -= 1;
             System.out.println("USF apagada com sucesso!");
         }
-        limpar();
         menuUSF();
     }
     public void menuHospital(){
@@ -762,44 +626,32 @@ public class Menu {
         opcao = r.nextLine();
         switch(opcao){
             case "1":
-                limpar();
                 adicionarHospital();
                 break;
             case "2":
-                limpar();
                 mostrarHospital();
                 break;
             case "3":
-                limpar();
                 atualizarHospital();
                 break;
             case "4":
-                limpar();
                 apagarHospital();
                 break;
             case "5":
-                limpar();
                 adicionarPolo();
                 break;
             case "6":
-                limpar();
                 mostrarPolos();
             case "7":
-                limpar();
                 atualizarPolo();
                 break;
             case "8":
-                limpar();
                 apagarPolo();
                 break;
             case "9":
-                limpar();
                 mostrarMenu();
             default:
-                limpar();
                 System.out.println("Insira uma opção válida!");
-                dormir(2000);
-                limpar();
                 menuHospital();
                 break;
         }
@@ -837,8 +689,6 @@ public class Menu {
         System.out.println(hospitalAssociado);
         polos[numeroPolos - 1].setPolo(nomePolo, nTelPolo, moradaPolo, hospitalAssociado);
         System.out.println("Hospital criado com sucesso!");
-        dormir(3000);
-        limpar();
         menuHospital();
     }
     public void mostrarHospital(){
@@ -860,8 +710,6 @@ public class Menu {
            }
         }
         System.out.println("Aqui acima estão listados todos os hospitais disponíveis de momento, bem como os seus respetivos polos.");
-        dormir(3000);
-        limpar();
         menuHospital();
     }
     public void atualizarHospital(){
@@ -892,10 +740,7 @@ public class Menu {
             System.out.println("Introduza a morada do Hospital: ");
             morada = r.nextLine();
             unidadesHospitalares[escolhaAtualizarHospital - 1].setHospital(nome, email, morada);
-            limpar();
             System.out.println("Hospital atualizado com sucesso!");
-            dormir(2000);
-            limpar();
             menuHospital();
         }
     }
@@ -912,7 +757,6 @@ public class Menu {
         r.nextLine();
         if (escolhaApagarHospital == 0 || escolhaApagarHospital > numeroHospitais){
             System.out.println("Escolha um Hospital válido!");
-            limpar();
             menuHospital();
         }else{
             escolhaApagarHospital -= 1;
@@ -927,7 +771,6 @@ public class Menu {
             numeroHospitais -= 1;
             System.out.println("Hospital apagado com sucesso!");
         }
-        limpar();
         menuHospital();
     }
     public void adicionarPolo(){
@@ -954,7 +797,6 @@ public class Menu {
         int hospitalEscolhido = r.nextInt();
             if(hospitalEscolhido == 0 || hospitalEscolhido > numeroHospitais){
                 System.out.println("Insira um hospital válido!");
-                limpar();
                 menuHospital();
             }else{
                String hospitalAssociado = unidadesHospitalares[hospitalEscolhido - 1].getNomeHospital();
@@ -962,8 +804,6 @@ public class Menu {
                 polos[numeroPolos - 1].setPolo(nome, nTel, morada, hospitalAssociado);
                 System.out.println("Polo criado e associado a um hospital com sucesso!");
             }
-        dormir(6000);
-        limpar();
         menuHospital();
     }
     public void mostrarPolos(){
@@ -977,88 +817,71 @@ public class Menu {
                 }
             System.out.println("Aqui acima estão listados todos os polos existentes de momento e os respetivos nomes dos hospitais a que pertencem.");
         }
-        dormir(5000);
-        limpar();
         mostrarMenu();
     }
     public void menuConsultas(){
-        String opcao;
-        System.out.println("==== ÁREA CONSULTAS ====");
-        System.out.println("1 - Marcar Consulta");
-        System.out.println("2 - Desmarcar Consulta");
-        System.out.println("3 - Mostrar consultas");
-        System.out.println("4 - Mostrar consultas por data específica");
-        System.out.println("5 - Mostrar consultas por intervalo de data");
-        System.out.println("6 - Tempo médio da consulta");
-        System.out.println("7 - Tempo médio da consulta por data");
-        System.out.println("8 - Guardar consulta");
-        System.out.println("9 - Ler consultas");
-        System.out.println("10 - Mostrar consultas por especialidade");
-        System.out.println("11 - Mostrar consultas por utente");
-        System.out.println("12 - Atualizar enfermeiros de uma consulta");
-        System.out.println("0 - Sair");
-        opcao = r.nextLine();
-        switch (opcao){
-            case "1":
-                limpar();
-                marcarConsulta();
-                break;
-            case "2":
-                limpar();
-                desmarcarConsulta();
-                break;
-            case "3":
-                limpar();
-                mostrarConsulta();
-                break;
-            case "4":
-                limpar();
-                mostrarConsultaData();
-                break;
-            case "5":
-                limpar();
-                mostrarConsutaIntervaloData();
-                break;
-            case "6":
-                limpar();
-                tempoMedioConsulta();
-                break;
-            case "7":
-                limpar();
-                tempoMedioConsultaData();
-                break;
-            case "8":
-                limpar();
-                guardarConsulta();
-                break;
-            case "9":
-                limpar();
-                //lerConsultas();
-                break;
-            case "0":
-                limpar();
-                mostrarMenu();
-                break;
-            case "10":
-                limpar();
-                mostrarConsultasEspecialidadeEIntervaloDatas();
-                break;
-            case "11":
-                limpar();
-                mostrarConsultasUtentesEIntervaloDatas();
-                break;
-            case "12":
-                limpar();
-                alterarEnfermeirosConsulta();
-                break;
-            default:
-                limpar();
-                System.out.println("Insira uma opção válida!");
-                dormir(2000);
-                limpar();
-                menuConsultas();
-                break;
-        }
+        int opcao;
+        do{
+            System.out.println("==== ÁREA CONSULTAS ====");
+            System.out.println("1 - Marcar Consulta");
+            System.out.println("2 - Desmarcar Consulta");
+            System.out.println("3 - Mostrar consultas");
+            System.out.println("4 - Mostrar consultas por data específica");
+            System.out.println("5 - Mostrar consultas por intervalo de data");
+            System.out.println("6 - Tempo médio da consulta");
+            System.out.println("7 - Tempo médio da consulta por data");
+            System.out.println("8 - Guardar consulta");
+            System.out.println("9 - Ler consultas");
+            System.out.println("10 - Mostrar consultas por especialidade");
+            System.out.println("11 - Mostrar consultas por utente");
+            System.out.println("12 - Atualizar enfermeiros de uma consulta");
+            System.out.println("0 - Sair");
+            opcao = r.nextInt();
+            switch (opcao){
+                case 0:
+                    break;
+                case 1:
+                    marcarConsulta();
+                    break;
+                case 2:
+                    desmarcarConsulta();
+                    break;
+                case 3:
+                    mostrarConsulta();
+                    break;
+                case 4:
+                    mostrarConsultaData();
+                    break;
+                case 5:
+                    mostrarConsutaIntervaloData();
+                    break;
+                case 6:
+                    tempoMedioConsulta();
+                    break;
+                case 7:
+                    tempoMedioConsultaData();
+                    break;
+                case 8:
+                    guardarConsulta();
+                    break;
+                case 9:
+                    //lerConsultas();
+                    break;
+                case 10:
+                    mostrarConsultasEspecialidadeEIntervaloDatas();
+                    break;
+                case 11:
+                    mostrarConsultasUtentesEIntervaloDatas();
+                    break;
+                case 12:
+                    alterarEnfermeirosConsulta();
+                    break;
+                default:
+                    System.out.println("Insira uma opção válida!");
+                    menuConsultas();
+                    break;
+            }
+        }while(opcao != 0);
     }
     public void marcarConsulta(){
         String escolhaMedico;
@@ -1206,8 +1029,6 @@ public class Menu {
                 consultas[numeroConsultas - 1].setConsulta(numeroConsultas, dataEhora, dataEhoraRegisto, edificioSala,escolhaLocalConsulta, escolhaMedicoConsulta, escolhaUtenteConsulta, especialidadeConsulta,escolhaEnfermeirosConsulta);
             }
         }
-        dormir(1000);
-        limpar();
         menuConsultas();
     }
     public void desmarcarConsulta(){
@@ -1240,21 +1061,16 @@ public class Menu {
     public void mostrarConsulta(){
         if (numeroConsultas == 0){
             System.out.println("Não existem consultas!");
-            dormir(3000);
         }else {
             for (int i = 0; i < numeroConsultas ; i++){
                 consultas[i].getConsulta();
             }
         }
-        dormir(6000);
-        limpar();
         menuConsultas();
     }
     public void mostrarConsultaData(){
         if (numeroConsultas == 0) {
             System.out.println("Não existem Consultas!");
-            dormir(3000);
-            limpar();
             menuConsultas();
         }
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1272,8 +1088,6 @@ public class Menu {
             }
         }
         System.out.println("Aqui acima estão listadas todas as consultas disponíveis de momento.");
-        dormir(3000);
-        limpar();
         menuConsultas();
     }
     public void alterarEnfermeirosConsulta(){
@@ -1340,8 +1154,6 @@ public class Menu {
                 System.out.println(escolhaEnfermeirosConsulta);
             }
             consultas[escolhaAtualizarEnfConsulta - 1 ].setEnfermeirosConsulta(escolhaEnfermeirosConsulta);
-            dormir(2000);
-            limpar();
             menuConsultas();
         }
     }
@@ -1381,8 +1193,6 @@ public class Menu {
                 System.out.println("========");
             }
         }
-        dormir(3000);
-        limpar();
         menuConsultas();
     }
     public void mostrarConsultasUtentesEIntervaloDatas(){
@@ -1412,15 +1222,11 @@ public class Menu {
                 System.out.println("========");
             }
         }
-        dormir(3000);
-        limpar();
         menuConsultas();
     }
     public void mostrarConsutaIntervaloData(){
         if (numeroConsultas == 0) {
             System.out.println("Não existem Consultas!");
-            dormir(3000);
-            limpar();
             menuConsultas();
         }
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1441,8 +1247,6 @@ public class Menu {
             }
         }
         System.out.println("Aqui acima estão listadas todas as consultas disponíveis de momento.");
-        dormir(3000);
-        limpar();
         menuConsultas();
     }
     public void tempoMedioConsulta(){
@@ -1451,8 +1255,6 @@ public class Menu {
     public void tempoMedioConsultaData(){
         if (numeroConsultas == 0) {
             System.out.println("Não existem Consultas!");
-            dormir(3000);
-            limpar();
             menuConsultas();
         }
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1478,7 +1280,7 @@ public class Menu {
                 LocalDate dataDaConsultaFormatadaNova = LocalDate.parse(dataDaConsulta, formato);
                 dataDoResgisto = dataDoRegistoFormatada.format(formato);
                 LocalDate dataDoRegistoFormatadaNova = LocalDate.parse(dataDoResgisto, formato);
-                intervalo += DAYS.between(dataDoRegistoFormatadaNova,dataDaConsultaFormatadaNova);
+                //intervalo += DAYS.between(dataDoRegistoFormatadaNova,dataDaConsultaFormatadaNova);
                 System.out.println(intervalo);
                 contadorConsulta++;
             }
@@ -1548,10 +1350,7 @@ public class Menu {
             }
             String hospitalAssociado = unidadesHospitalares[escolhaHospital -1].getNomeHospital();
             polos[escolhaAtualizarPolo - 1].setPolo(nome, nTelefone, morada, hospitalAssociado);
-            limpar();
             System.out.println("Polo atualizado com sucesso!");
-            dormir(2000);
-            limpar();
             menuHospital();
         }
     }
@@ -1568,7 +1367,6 @@ public class Menu {
         if (escolhaApagarPolo < 0 || escolhaApagarPolo > numeroPolos){
             System.out.println("Escolha um polo válido!");
             menuHospital();
-            limpar();
         }else {
             escolhaApagarPolo -= 1;
             for (int i = 0 ; i < numeroPolos; i++){
@@ -1582,17 +1380,6 @@ public class Menu {
             numeroPolos -= 1;
             System.out.println("Polo apagado com sucesso!");
         }
-        limpar();
         menuHospital();
         }
-    public static void limpar(){
-        System.out.println("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n ");
-    }
-    public static void dormir(int ms){
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
 }
